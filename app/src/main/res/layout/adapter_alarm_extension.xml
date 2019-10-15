@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/main"
+    android:layout_height="256dp">
+
+    <RelativeLayout
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/time_is_set"
+                android:textSize="@dimen/sp54"
+                android:text="7:30"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/style_time"
+                android:layout_width="wrap_content"
+                android:text="AM"
+                android:textSize="@dimen/sp24"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <Switch
+            android:id="@+id/switch_on_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp8"
+            android:outlineSpotShadowColor="#00E676" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp8"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/checkbox_repeat"
+                android:layout_width="wrap_content"
+                android:buttonTint="@color/white"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/sp14"
+                android:textColor="@color/white"
+                android:text="Repeat"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/icon_bell"
+                android:layout_width="26dp"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/alarm_sound"
+                android:layout_centerVertical="true"
+                android:layout_height="26dp"/>
+
+            <TextView
+                android:layout_toRightOf="@+id/icon_bell"
+                android:id="@+id/type_alarm_sound"
+                android:layout_marginLeft="@dimen/dp8"
+                android:layout_width="@dimen/dp240"
+                android:textColor="@color/white"
+                android:text="jksahjkfakjgkjsabk"
+                android:singleLine="true"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"/>
+
+            <CheckBox
+                android:id="@+id/checkbox_vibrate"
+                android:layout_toRightOf="@+id/type_alarm_sound"
+                android:layout_width="wrap_content"
+                android:buttonTint="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_toRightOf="@id/checkbox_vibrate"
+                android:layout_width="wrap_content"
+                android:textColor="@color/white"
+                android:text="Vibrate"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp8"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

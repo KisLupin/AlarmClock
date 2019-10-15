@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/main"
+    android:layout_height="110dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/time_is_set"
+                android:textSize="@dimen/sp54"
+                android:text="7:30"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/style_time"
+                android:layout_width="wrap_content"
+                android:text="AM"
+                android:textSize="@dimen/sp24"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_width="wrap_content"
+        android:text="Alarm"
+        android:textSize="@dimen/sp18"
+        android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/dp16"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"/>
+
+    <Switch
+        android:id="@+id/switch_on_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp8"
+        android:outlineSpotShadowColor="#00E676" />
+</RelativeLayout>

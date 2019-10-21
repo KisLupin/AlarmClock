@@ -1,4 +1,4 @@
-package com.example.alarmclock.ui;
+package com.example.alarmclock.ui.alarm;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.alarmclock.R;
-import com.example.alarmclock.ui.MainActivity;
+import com.example.alarmclock.ui.main.MainActivity;
 
-public class TimerPickerActivity extends AppCompatActivity implements View.OnClickListener {
+public class AlarmSettingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String hours;
     private String minutes;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/alarm_is_click"
+        android:layout_width="wrap_content"
+        android:src="@drawable/alarm_onclick"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/timer_is_click"
+        android:layout_width="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/stopwatch_noclick"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/stopwatch_is_click"
+        android:layout_width="wrap_content"
+        android:src="@drawable/timer_noclick"
+        android:layout_alignParentBottom="true"
+        android:layout_height="match_parent"/>
+
+
+</RelativeLayout>

@@ -30,6 +30,7 @@
                 android:textSize="@dimen/sp24"
                 android:textColor="@color/white"
                 android:layout_height="wrap_content"/>
+
         </LinearLayout>
     </RelativeLayout>
 

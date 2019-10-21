@@ -1,15 +1,19 @@
-package com.example.alarmclock.ui;
+package com.example.alarmclock.ui.stopwatch;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.alarmclock.R;
 
@@ -17,43 +21,40 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StopWatchActivity extends AppCompatActivity {
+public class StopWatchFrag extends Fragment {
 
-    TextView textView ;
+    private TextView textView ;
+    private Button start, pause, reset, lap ;
+    private long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L ;
+    private Handler handler;
+    private int Seconds, Minutes, MilliSeconds ;
+    private ListView listView ;
+    private String[] ListElements = new String[] {  };
+    private List<String> ListElementsArrayList ;
+    private ArrayAdapter<String> adapter ;
 
-    Button start, pause, reset, lap ;
-
-    long MillisecondTime, StartTime, TimeBuff, UpdateTime = 0L ;
-
-    Handler handler;
-
-    int Seconds, Minutes, MilliSeconds ;
-
-    ListView listView ;
-
-    String[] ListElements = new String[] {  };
-
-    List<String> ListElementsArrayList ;
-
-    ArrayAdapter<String> adapter ;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_stopwatch, container,false);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stopwatch);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        textView = view.findViewById(R.id.textView);
 
-        textView = findViewById(R.id.textView);
-        start = findViewById(R.id.button);
-        pause = findViewById(R.id.button2);
-        reset = findViewById(R.id.button3);
-        lap = findViewById(R.id.button4) ;
-        listView = findViewById(R.id.listview1);
+        start = view.findViewById(R.id.button);
+        pause = view.findViewById(R.id.button2);
+        reset = view.findViewById(R.id.button3);
+        lap = view.findViewById(R.id.button4) ;
+        listView = view.findViewById(R.id.listview1);
 
         handler = new Handler() ;
 
         ListElementsArrayList = new ArrayList<String>(Arrays.asList(ListElements));
 
-        adapter = new ArrayAdapter<String>(StopWatchActivity.this,
+        adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1,
                 ListElementsArrayList
         );
@@ -119,7 +120,6 @@ public class StopWatchActivity extends AppCompatActivity {
     }
 
     public Runnable runnable = new Runnable() {
-
         public void run() {
 
             MillisecondTime = SystemClock.uptimeMillis() - StartTime;

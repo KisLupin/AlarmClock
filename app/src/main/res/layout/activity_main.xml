@@ -13,13 +13,12 @@
 
        <TextView
            android:layout_width="wrap_content"
-           android:textColor="@color/orange"
-           android:text="Edit"
-           android:textSize="@dimen/sp18"
-           android:layout_marginLeft="@dimen/dp8"
+           android:layout_height="wrap_content"
            android:layout_centerVertical="true"
-
-           android:layout_height="wrap_content"/>
+           android:layout_marginLeft="@dimen/dp8"
+           android:text="Edit"
+           android:textColor="@color/orange"
+           android:textSize="@dimen/sp18" />
 
        <TextView
            android:layout_width="wrap_content"
@@ -30,28 +29,24 @@
            android:layout_height="wrap_content"/>
 
        <ImageView
+           android:id="@+id/create_alarm"
            android:layout_width="wrap_content"
-           android:src="@drawable/add"
+           android:layout_height="wrap_content"
            android:layout_alignParentRight="true"
            android:layout_centerVertical="true"
            android:layout_marginRight="@dimen/dp8"
-           android:layout_height="wrap_content"/>
+           android:src="@drawable/add" />
 
    </RelativeLayout>
 
-    <TableLayout
-        android:id="@+id/rc"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
         android:layout_above="@id/selection"
         android:layout_below="@id/titile"
         android:layout_width="match_parent"
         android:background="@color/black"
         android:layout_height="match_parent">
-
-        <androidx.appcompat.app.AlertController.RecycleListView
-            android:id="@+id/alarm"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableLayout>
+    </androidx.viewpager.widget.ViewPager>
 
     <LinearLayout
         android:id="@+id/selection"
@@ -80,6 +75,7 @@
             android:layout_width="wrap_content"
             android:src="@drawable/timer_noclick"
             android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 

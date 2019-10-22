@@ -45,6 +45,7 @@
         android:id="@+id/timer_picker"
         android:layout_width="wrap_content"
         android:timePickerMode="clock"
+        style="@style/customTimePicker"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

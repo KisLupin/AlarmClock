@@ -1,20 +1,12 @@
 package com.example.alarmclock.data;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ScheduleAlarm {
+    @SerializedName("time")
     private String time;
-    private String tyle;
-
-    public ScheduleAlarm(String time, String tyle) {
+    public ScheduleAlarm(String time) {
         this.time = time;
-        this.tyle = tyle;
-    }
-
-    public String getTyle() {
-        return tyle;
-    }
-
-    public void setTyle(String tyle) {
-        this.tyle = tyle;
     }
 
     public String getTime() {

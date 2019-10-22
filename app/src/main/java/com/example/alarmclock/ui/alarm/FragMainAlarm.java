@@ -14,23 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alarmclock.R;
 import com.example.alarmclock.data.ScheduleAlarm;
-import com.example.alarmclock.ui.main.MainActivity;
+import com.example.alarmclock.utils.ShareUtilsAlarm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
 
     private RecyclerView rc;
-    private List<ScheduleAlarm> alarmList;
+    private static List<ScheduleAlarm> alarmList = new ArrayList<>();
     private AlarmAdapter alarmAdapter;
-    private IContent content;
 
-    public FragMainAlarm(IContent content) {
-        this.content = content;
-    }
-
-    public FragMainAlarm() {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        alarmList = ShareUtilsAlarm.getAllAlarm(getContext());
+        super.onCreate(savedInstanceState);
     }
 
     @Nullable
@@ -52,31 +51,24 @@ public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
                 openSetTimer();
             }
         });
-        init();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        init();
-    }
-
-    public interface IContent{
-        ScheduleAlarm getContent();
-    }
-
-    private void init(){
-        alarmList = new ArrayList<>();
-//        ScheduleAlarm scheduleAlarm = content.getContent();
-//        alarmList.add(scheduleAlarm);
-        alarmList.add(new ScheduleAlarm("7:00","AM"));
-        alarmList.add(new ScheduleAlarm("8:30","PM"));
-        alarmAdapter.notifyDataSetChanged();
+        getData();
+        ShareUtilsAlarm.saveAlarm(getContext(), alarmList);
     }
 
     private void openSetTimer(){
         Intent intent = new Intent(getContext(), AlarmSettingActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 
     @Override
@@ -94,6 +86,28 @@ public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
 
     @Override
     public void onClick(int pos) {
+
+    }
+
+    private void getData(){
+        if (getActivity().getIntent().getExtras() == null){
+            return;
+        }
+        String hour = getActivity().getIntent().getExtras().getString("HOUR");
+        String min = getActivity().getIntent().getExtras().getString("MIN");
+        String text = hour +":"+ min;
+        alarmList.add(new ScheduleAlarm(text));
+        alarmAdapter.notifyDataSetChanged();
+    }
+
+    private void removeAlarm(int pos){
+        alarmList.remove(pos);
+        ShareUtilsAlarm.clearAll(getContext());
+        ShareUtilsAlarm.saveAlarm(getContext(), alarmList);
+        alarmAdapter.notifyDataSetChanged();
+    }
+
+    private void sortTime(){
 
     }
 }

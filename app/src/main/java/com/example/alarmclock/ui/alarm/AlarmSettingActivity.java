@@ -22,10 +22,6 @@ public class AlarmSettingActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timepicker);
         timerPicker = findViewById(R.id.timer_picker);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            hours = timerPicker.getHour()+"";
-            minutes = timerPicker.getMinute()+"";
-        }
         findViewById(R.id.cancel).setOnClickListener(this);
         findViewById(R.id.add_alarm).setOnClickListener(this);
     }
@@ -43,10 +39,16 @@ public class AlarmSettingActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void addSuccess(String hours, String minutes){
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("HOUR",hours);
-        intent.putExtra("MIN",minutes);
-        startActivity(intent);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            hours = timerPicker.getHour()+"";
+            minutes = timerPicker.getMinute()+"";
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("hrn",timerPicker.getHour());
+            intent.putExtra("minn",timerPicker.getMinute());
+            intent.putExtra("HOUR",hours);
+            intent.putExtra("MIN",minutes);
+            startActivity(intent);
+        }
     }
 
     private void openMain(){

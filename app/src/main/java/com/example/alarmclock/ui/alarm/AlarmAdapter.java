@@ -29,7 +29,6 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         ScheduleAlarm scheduleAlarm = alarm.getItem(position);
         holder.time.setText(scheduleAlarm.getTime());
-        holder.form.setText(scheduleAlarm.getTyle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -8,9 +8,9 @@ import com.example.alarmclock.ui.alarm.FragMainAlarm;
 import com.example.alarmclock.ui.stopwatch.StopWatchFrag;
 import com.example.alarmclock.ui.timer.TimerFrag;
 
-public class FragMainPager extends FragmentPagerAdapter {
+public class MainPager extends FragmentPagerAdapter {
 
-    public FragMainPager(FragmentManager manager) {
+    public MainPager(FragmentManager manager) {
         super(manager);
     }
 

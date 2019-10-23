@@ -3,6 +3,9 @@ package com.example.alarmclock.ui.alarm;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,13 +29,25 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         ScheduleAlarm scheduleAlarm = alarm.getItem(position);
         holder.time.setText(scheduleAlarm.getTime());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+        if (alarm.editClick()){
+            holder.im.setVisibility(View.VISIBLE);
+        }else  holder.im.setVisibility(View.GONE);
+        holder.im.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alarm.onClick(holder.getAdapterPosition());
+                alarm.onClick(position);
+            }
+        });
+
+        holder.aSwitch.setChecked(scheduleAlarm.isSwitch_Status());
+        holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                alarm.switchIsClick(isChecked, holder.getAdapterPosition());
             }
         });
     }
@@ -45,16 +60,20 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
     public interface IAlarm{
         int getCount();
         ScheduleAlarm getItem(int pos);
+        boolean editClick();
         void onClick(int pos);
+        void switchIsClick(boolean status, int pos);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView time;
-        private TextView form;
+        private ImageView im;
+        private Switch aSwitch;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             time = itemView.findViewById(R.id.time_is_set);
-            form = itemView.findViewById(R.id.style_time);
+            im = itemView.findViewById(R.id.show_delete);
+            aSwitch = itemView.findViewById(R.id.switch_on_off);
         }
     }
 }

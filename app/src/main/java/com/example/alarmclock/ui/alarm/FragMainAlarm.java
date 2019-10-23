@@ -17,14 +17,19 @@ import com.example.alarmclock.data.ScheduleAlarm;
 import com.example.alarmclock.utils.ShareUtilsAlarm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import static java.util.Collections.sort;
 
 public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
 
     private RecyclerView rc;
     private static List<ScheduleAlarm> alarmList = new ArrayList<>();
     private AlarmAdapter alarmAdapter;
+    private boolean isClick;
+    private int count = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,13 +56,27 @@ public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
                 openSetTimer();
             }
         });
+        getData();
+        ShareUtilsAlarm.saveAlarm(getContext(), alarmList);
+        view.findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count++;
+                if (count == 1){
+                    isClick = true;
+                    alarmAdapter.notifyDataSetChanged();
+                }else {
+                    isClick =false;
+                    count = 0;
+                    alarmAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getData();
-        ShareUtilsAlarm.saveAlarm(getContext(), alarmList);
     }
 
     private void openSetTimer(){
@@ -85,18 +104,35 @@ public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
     }
 
     @Override
-    public void onClick(int pos) {
+    public boolean editClick() {
+        return isClick;
+    }
 
+    @Override
+    public void onClick(int pos) {
+        removeAlarm(pos);
+    }
+
+    @Override
+    public void switchIsClick(boolean status, int pos) {
+        alarmList.get(pos).setSwitch_Status(status);
+        ShareUtilsAlarm.saveAlarm(getContext(), alarmList);
+        alarmAdapter.notifyDataSetChanged();
     }
 
     private void getData(){
         if (getActivity().getIntent().getExtras() == null){
             return;
         }
+        if (getActivity().getIntent().getExtras().get("HOUR") == null){
+            return;
+        }
         String hour = getActivity().getIntent().getExtras().getString("HOUR");
         String min = getActivity().getIntent().getExtras().getString("MIN");
         String text = hour +":"+ min;
         alarmList.add(new ScheduleAlarm(text));
+        getActivity().getIntent().removeExtra("HOUR");
+        getActivity().getIntent().removeExtra("MIN");
         alarmAdapter.notifyDataSetChanged();
     }
 
@@ -107,7 +143,7 @@ public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
         alarmAdapter.notifyDataSetChanged();
     }
 
-    private void sortTime(){
+    private void sortTime() {
 
     }
 }

@@ -50,6 +50,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
                 alarm.switchIsClick(isChecked, holder.getAdapterPosition());
             }
         });
+
+        holder.type.setText(scheduleAlarm.getType());
     }
 
     @Override
@@ -69,11 +71,13 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
         private TextView time;
         private ImageView im;
         private Switch aSwitch;
+        private TextView type;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             time = itemView.findViewById(R.id.time_is_set);
             im = itemView.findViewById(R.id.show_delete);
             aSwitch = itemView.findViewById(R.id.switch_on_off);
+            type = itemView.findViewById(R.id.type);
         }
     }
 }

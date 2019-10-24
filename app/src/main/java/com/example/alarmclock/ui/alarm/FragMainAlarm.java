@@ -1,6 +1,10 @@
 package com.example.alarmclock.ui.alarm;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alarmclock.R;
 import com.example.alarmclock.data.ScheduleAlarm;
+import com.example.alarmclock.utils.AlarmSoundActive;
+import com.example.alarmclock.utils.AlertReceiver;
 import com.example.alarmclock.utils.ShareUtilsAlarm;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -26,10 +34,13 @@ import static java.util.Collections.sort;
 public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
 
     private RecyclerView rc;
-    private static List<ScheduleAlarm> alarmList = new ArrayList<>();
+    public static List<ScheduleAlarm> alarmList = new ArrayList<>();
     private AlarmAdapter alarmAdapter;
     private boolean isClick;
     private int count = 0;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+    private Calendar calendar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +51,7 @@ public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         return inflater.inflate(R.layout.frag_main_alarm, container ,false);
     }
 
@@ -56,8 +68,7 @@ public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
                 openSetTimer();
             }
         });
-        getData();
-        ShareUtilsAlarm.saveAlarm(getContext(), alarmList);
+        alarmList = ShareUtilsAlarm.getAllAlarm(getContext());
         view.findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,22 +83,12 @@ public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
                 }
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        alarmInstance();
     }
 
     private void openSetTimer(){
         Intent intent = new Intent(getContext(), AlarmSettingActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
     }
 
     @Override
@@ -117,33 +118,30 @@ public class FragMainAlarm extends Fragment implements AlarmAdapter.IAlarm {
     public void switchIsClick(boolean status, int pos) {
         alarmList.get(pos).setSwitch_Status(status);
         ShareUtilsAlarm.saveAlarm(getContext(), alarmList);
-        alarmAdapter.notifyDataSetChanged();
-    }
-
-    private void getData(){
-        if (getActivity().getIntent().getExtras() == null){
-            return;
-        }
-        if (getActivity().getIntent().getExtras().get("HOUR") == null){
-            return;
-        }
-        String hour = getActivity().getIntent().getExtras().getString("HOUR");
-        String min = getActivity().getIntent().getExtras().getString("MIN");
-        String text = hour +":"+ min;
-        alarmList.add(new ScheduleAlarm(text));
-        getActivity().getIntent().removeExtra("HOUR");
-        getActivity().getIntent().removeExtra("MIN");
-        alarmAdapter.notifyDataSetChanged();
     }
 
     private void removeAlarm(int pos){
         alarmList.remove(pos);
         ShareUtilsAlarm.clearAll(getContext());
         ShareUtilsAlarm.saveAlarm(getContext(), alarmList);
+        alarmInstance();
         alarmAdapter.notifyDataSetChanged();
     }
 
-    private void sortTime() {
-
+    private void alarmInstance(){
+        if (alarmList == null) alarmList = new ArrayList<>();
+        for (int i = 0; i < alarmList.size(); i++) {
+            if (alarmList.get(i).isSwitch_Status()){
+                Intent intent = new Intent(getContext(), AlertReceiver.class);
+                intent.putExtra("ID",i);
+                calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, alarmList.get(i).getHour());
+                calendar.set(Calendar.MINUTE, alarmList.get(i).getMin() -1);
+                calendar.set(Calendar.MILLISECOND, 0);
+                pendingIntent = PendingIntent.getBroadcast(getContext(), i, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+            }
+        }
     }
+
 }

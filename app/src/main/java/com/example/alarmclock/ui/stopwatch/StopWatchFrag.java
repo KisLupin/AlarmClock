@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.alarmclock.R;
 
@@ -51,11 +52,9 @@ public class StopWatchFrag extends Fragment {
         listView = view.findViewById(R.id.listview1);
 
         handler = new Handler() ;
-
-        ListElementsArrayList = new ArrayList<String>(Arrays.asList(ListElements));
-
-        adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_list_item_1,
+        ListElementsArrayList = new ArrayList<>(Arrays.asList(ListElements));
+        adapter = new ArrayAdapter<>(getContext(),
+                R.layout.listview_adapter,
                 ListElementsArrayList
         );
 
@@ -64,32 +63,24 @@ public class StopWatchFrag extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 StartTime = SystemClock.uptimeMillis();
                 handler.postDelayed(runnable, 0);
-
                 reset.setEnabled(false);
-
             }
         });
 
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 TimeBuff += MillisecondTime;
-
                 handler.removeCallbacks(runnable);
-
                 reset.setEnabled(true);
-
             }
         });
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 MillisecondTime = 0L ;
                 StartTime = 0L ;
                 TimeBuff = 0L ;
@@ -97,11 +88,8 @@ public class StopWatchFrag extends Fragment {
                 Seconds = 0 ;
                 Minutes = 0 ;
                 MilliSeconds = 0 ;
-
                 textView.setText("00:00:00");
-
                 ListElementsArrayList.clear();
-
                 adapter.notifyDataSetChanged();
             }
         });
@@ -109,11 +97,8 @@ public class StopWatchFrag extends Fragment {
         lap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 ListElementsArrayList.add(textView.getText().toString());
-
                 adapter.notifyDataSetChanged();
-
             }
         });
 
@@ -121,25 +106,17 @@ public class StopWatchFrag extends Fragment {
 
     public Runnable runnable = new Runnable() {
         public void run() {
-
             MillisecondTime = SystemClock.uptimeMillis() - StartTime;
-
             UpdateTime = TimeBuff + MillisecondTime;
-
             Seconds = (int) (UpdateTime / 1000);
-
             Minutes = Seconds / 60;
-
             Seconds = Seconds % 60;
-
             MilliSeconds = (int) (UpdateTime % 1000);
-
-            textView.setText("" + Minutes + ":"
+            textView.setText(
+                    "" + Minutes + ":"
                              + String.format("%02d", Seconds) + ":"
                              + String.format("%03d", MilliSeconds));
-
             handler.postDelayed(this, 0);
         }
-
     };
 }

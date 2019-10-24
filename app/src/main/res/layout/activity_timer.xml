@@ -8,49 +8,56 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:gravity="center"
         android:layout_height="128dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:text="00"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp48"
-            android:layout_height="wrap_content"/>
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp48"
+                android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/sp18"
-            android:textColor="@color/white"
-            android:text="h"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/sp18"
+                android:textColor="@color/white"
+                android:text="h"
+                android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/sp48"
-            android:textColor="@color/white"
-            android:text="00"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/sp48"
+                android:textColor="@color/white"
+                android:text="00"
+                android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/sp18"
-            android:textColor="@color/white"
-            android:text="m"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/sp18"
+                android:textColor="@color/white"
+                android:text="m"
+                android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/sp48"
-            android:textColor="@color/white"
-            android:text="00"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/sp48"
+                android:textColor="@color/white"
+                android:text="00"
+                android:layout_height="wrap_content"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:textSize="@dimen/sp18"
-            android:textColor="@color/white"
-            android:text="s"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/sp18"
+                android:textColor="@color/white"
+                android:text="s"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

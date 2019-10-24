@@ -21,7 +21,10 @@ import com.example.alarmclock.utils.ShareUtilsAlarm;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,11 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView timer;
     private ImageView stopwatch;
     private View headerView;
-    private AlarmManager alarmManager;
-    private PendingIntent pendingIntent;
-    private Calendar calendar;
-    private List<ScheduleAlarm> scheduleAlarms;
-
+    public static int id;
+    private List<ScheduleAlarm> alarmList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,11 +78,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        calendar = Calendar.getInstance();
-        starAlarm();
+        alarmList = ShareUtilsAlarm.getAllAlarm(this);
         stopService(new Intent(this, AlarmSoundActive.class));
-        scheduleAlarms = ShareUtilsAlarm.getAllAlarm(this);
+        if (id != 100){
+            if (alarmList.size() != 0){
+                cancelAlarm(id);
+            }
+        }
     }
 
     private void customTablayout(){
@@ -101,24 +103,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        setAlarm(calendar);
-//        starAlarm();
     }
 
-    private void starAlarm(){
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-    }
-
-    private void setAlarm(Calendar calendar){
-        Intent intent2 = new Intent(this,AlertReceiver.class);
-        Intent intent = getIntent();
-        if (intent.getIntExtra("hrn",0) == 0){
-            return;
-        }
-        calendar.set(Calendar.HOUR_OF_DAY, intent.getIntExtra("hrn",0));
-        calendar.set(Calendar.MINUTE, intent.getIntExtra("minn",0));
-        calendar.set(Calendar.MILLISECOND, 0);
-        pendingIntent = PendingIntent.getBroadcast(this,0,intent2,PendingIntent.FLAG_UPDATE_CURRENT);
+    private void cancelAlarm(int id){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmList.get(id).setSwitch_Status(false);
+        ShareUtilsAlarm.saveAlarm(this, alarmList);
+        alarmManager.cancel(pendingIntent);
     }
 }
 

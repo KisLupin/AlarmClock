@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.alarmclock.ui.alarm.FragMainAlarm;
 import com.example.alarmclock.ui.stopwatch.StopWatchFrag;
+import com.example.alarmclock.ui.timer.TimerControlFrag;
 import com.example.alarmclock.ui.timer.TimerFrag;
 
 public class MainPager extends FragmentPagerAdapter {
@@ -21,12 +22,13 @@ public class MainPager extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
         if (position == 0){
             return new FragMainAlarm();
         }
         if (position == 1){
             return new StopWatchFrag();
         }
-        return new TimerFrag();
+        return new TimerControlFrag();
     }
 }

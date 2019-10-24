@@ -8,7 +8,6 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:id="@+id/titile"
         android:layout_height="@dimen/dp54">
 
         <TextView

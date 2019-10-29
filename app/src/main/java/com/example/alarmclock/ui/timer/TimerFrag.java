@@ -20,7 +20,6 @@ import java.util.Stack;
 
 public class TimerFrag extends Fragment implements View.OnClickListener {
 
-    private ImageView start;
     private TextView hour;
     private TextView min;
     private TextView second;
